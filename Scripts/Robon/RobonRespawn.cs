@@ -7,9 +7,9 @@ namespace DefaultNamespace
     {
         [SerializeField] protected Transform robonTransform;
         [SerializeField] protected GameObject robonRespawnPoint;
-        [SerializeField] protected GameObject robonAfterDiePoint;
         public float timeRespawnDie = 1f;
         public RobonControl robonControl;
+        public Animator cam;
 
         protected override void LoadComponents()
         {
@@ -32,6 +32,7 @@ namespace DefaultNamespace
         public virtual void RobonDie()
         {
             if (GameManager.Instance.IsLose()) return;
+            cam.SetTrigger("Shake");
             StartCoroutine(DelayTransition());
             //this.RespawnBin();
         }
@@ -42,20 +43,21 @@ namespace DefaultNamespace
             robonControl.animator.SetBool("isDeath",true);
             robonControl.rb.bodyType = RigidbodyType2D.Static;
             sound.Play();
+            GameManager.Instance.timeBar.SetMaxTime(GameManager.Instance.TimeMax);
             yield return new WaitForSeconds(timeRespawnDie);
             robonControl.animator.SetBool("isDeath",false);
             this.robonTransform.position = robonRespawnPoint.transform.position;
             GameManager.Instance.robonHealth.Deduct(1);
             robonControl.rb.bodyType = RigidbodyType2D.Dynamic;
-            GameManager.Instance.timeBar.SetMaxTime(GameManager.Instance.TimeMax);
             GameManager.Instance.timeBar.hadWarning = false;
+            if (!GameManager.Instance.IsLose())
+            {
+                AudioSource buttonSound = GameObject.Find("UIButtonSound").GetComponent<AudioSource>();
+                buttonSound.Play();
+            }
         }
-        public void RobonMoveToDeathZone()
-        {
-            this.robonTransform.position = this.robonAfterDiePoint.transform.position;
-        }
-        
-        
+
+
         public virtual void RobonCompleteBox()
         {
             if (GameManager.Instance.IsLose()) return;

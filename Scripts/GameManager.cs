@@ -30,6 +30,7 @@ namespace DefaultNamespace
         private int isWin = 0;
         public RobonControl robonControl;
         public float timeDelayNextLevel = 1;
+        public GameObject robon;
         
         protected override void Awake()
         {
@@ -102,8 +103,6 @@ namespace DefaultNamespace
             if (this.isWin == 1)
             {
                 winLevelUI.gameObject.SetActive(true);
-
-                //DoAnimationWinGame
             }
         }
 
@@ -111,14 +110,6 @@ namespace DefaultNamespace
         {
             this.isWin = 1;
             StartCoroutine(NextLevel());
-            
-        }
-
-        public virtual void RobonDie()
-        {
-            if (GameManager.Instance.IsLose()) return;
-            
-            //this.RespawnBin();
         }
 
         private IEnumerator NextLevel()
@@ -141,17 +132,11 @@ namespace DefaultNamespace
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
             }
         }
-        protected virtual void LoseGame()
+        public virtual void LoseGame()
         {
-            if (IsLose() && this.loseGameUI != null)
+            if (IsLose())
             {
                 loseGameUI.gameObject.SetActive(true);
-                // Do animation
-
-              /*  AudioSource sound = GameObject.Find("LoseGameSound").GetComponent<AudioSource>();
-                sound.Play();*/
-
-                this.robonRespawn.RobonMoveToDeathZone();
             }
         }
         

@@ -24,9 +24,11 @@ public class MainUIManager : MonoBehaviour
 
     public void Replay()
     {
+        this.ResumeGame();
+        GameManager.Instance.robon.gameObject.SetActive(true);
         GameManager.Instance.robonHealth.ReBorn();
         GameManager.Instance.robonRespawn.RobonCompleteBox();
-
+        
         AudioSource sound = GameObject.Find("BackgroundSound").GetComponent<AudioSource>();
         sound.Play();
     }
