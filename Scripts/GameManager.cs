@@ -26,7 +26,7 @@ namespace DefaultNamespace
         public RobonHealth robonHealth;
         public Transform loseGameUI;
         public Transform winLevelUI;
-        private bool isWin = false;
+        private int isWin = 0;
         
         protected override void Awake()
         {
@@ -96,16 +96,20 @@ namespace DefaultNamespace
         
         protected virtual void isWinLevel()
         {
-            if (isWin == true)
+            if (this.isWin == 1)
             {
-                winLevelUI.gameObject.SetActive(true);                
+                winLevelUI.gameObject.SetActive(true);
+
                 //DoAnimationWinGame
             }
         }
 
         public void WinLevel()
         {
-            this.isWin = true;
+            this.isWin = 1;
+
+            AudioSource sound = GameObject.Find("CompletedLevel").GetComponent<AudioSource>();
+            sound.Play();
         }
 
         protected virtual void LoseGame()
@@ -114,6 +118,10 @@ namespace DefaultNamespace
             {
                 loseGameUI.gameObject.SetActive(true);
                 // Do animation
+
+              /*  AudioSource sound = GameObject.Find("LoseGameSound").GetComponent<AudioSource>();
+                sound.Play();*/
+
                 this.robonRespawn.RobonMoveToDeathZone();
             }
         }

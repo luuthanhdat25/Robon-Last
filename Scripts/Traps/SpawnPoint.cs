@@ -47,6 +47,7 @@ public class SpawnPoint : RepeatMonobehaviour
 
     private void Update()
     {
+        if (Time.timeScale == 0) return;
         GameObject key = this.FindRoot().gameObject;
         this.PointMove(key);
     }

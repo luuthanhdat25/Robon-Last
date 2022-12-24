@@ -9,6 +9,7 @@ namespace DefaultNamespace.UI
         [SerializeField] protected Slider slider;
         [SerializeField] protected Gradient gradient;
         [SerializeField] protected Image fill;
+        public bool hadWarning;
         public float currentTime;
         protected override void LoadComponents()
         {
@@ -43,6 +44,14 @@ namespace DefaultNamespace.UI
             if (GameManager.Instance.IsLose()) return;
             currentTime -= Time.deltaTime;
             SetTime();
+
+            if ((float) currentTime / GameManager.Instance.TimeMax <= (float) 1 / 3 && this.hadWarning == false)
+            {
+                this.hadWarning = true;
+                AudioSource sound = GameObject.Find("WarningSound").GetComponent<AudioSource>();
+                sound.Play();
+            }
+
             if (currentTime <= 0) GameManager.Instance.robonRespawn.RobonDie();
         }
 

@@ -20,7 +20,19 @@ namespace DefaultNamespace
         
         public void Deduct(int hpDeduct)
         {
+            AudioSource sound = GameObject.Find("DieSound").GetComponent<AudioSource>();
+            sound.Play();
+
             this.hp -= hpDeduct;
+
+            if (this.hp <= 0)
+            {
+                AudioSource bgSound = GameObject.Find("BackgroundSound").GetComponent<AudioSource>();
+                bgSound.Pause();
+
+                AudioSource loseSound = GameObject.Find("LoseGameSound").GetComponent<AudioSource>();
+                loseSound.Play();
+            }
         }
     }
 }

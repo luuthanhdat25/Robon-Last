@@ -32,6 +32,7 @@ namespace DefaultNamespace
             this.robonTransform.position = robonRespawnPoint.transform.position;
             GameManager.Instance.robonHealth.Deduct(1);
             GameManager.Instance.timeBar.SetMaxTime(GameManager.Instance.TimeMax);
+            GameManager.Instance.timeBar.hadWarning = false;
             //this.RespawnBin();
         }
 

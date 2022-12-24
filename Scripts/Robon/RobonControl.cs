@@ -45,8 +45,5 @@ namespace DefaultNamespace
             float rotationZ = Mathf.Atan2(directionMove.y, directionMove.x) * Mathf.Rad2Deg;
             transform.parent.rotation = Quaternion.Euler(0f, 0f, rotationZ + 90);
         }
-
-        
-
     }
 }

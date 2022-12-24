@@ -26,6 +26,9 @@ public class MainUIManager : MonoBehaviour
     {
         GameManager.Instance.robonHealth.ReBorn();
         GameManager.Instance.robonRespawn.RobonCompleteBox();
+
+        AudioSource sound = GameObject.Find("BackgroundSound").GetComponent<AudioSource>();
+        sound.Play();
     }
 
     private void GetEscapeButton()
@@ -36,8 +39,10 @@ public class MainUIManager : MonoBehaviour
     public void ReloadLevel1()
     {
         SceneManager.LoadScene("Level 1");
+        AudioSource sound = GameObject.Find("BackgroundSound").GetComponent<AudioSource>();
+        sound.Play();
     }
-    
+
     public void PauseGameUI()
     {
         if (Time.timeScale > 0)
