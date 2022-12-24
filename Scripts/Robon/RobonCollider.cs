@@ -6,7 +6,7 @@ using UnityEngine;
 [RequireComponent(typeof(BoxCollider2D))]
 public class RobonCollider : RepeatMonobehaviour
 {
-    [SerializeField] protected Rigidbody2D rb;
+    public Rigidbody2D rb;
     [SerializeField] protected BoxCollider2D boxCollider;
     [SerializeField] protected RobonControl robonControl;
 

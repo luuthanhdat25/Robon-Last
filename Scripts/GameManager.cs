@@ -1,7 +1,7 @@
-using Bin;
-using Box;
 using DefaultNamespace.UI;
 using UnityEngine;
+using System.Collections;
+using UnityEngine.SceneManagement;
 
 namespace DefaultNamespace
 {
@@ -26,7 +26,10 @@ namespace DefaultNamespace
         public RobonHealth robonHealth;
         public Transform loseGameUI;
         public Transform winLevelUI;
+        public Transform winGameUI;
         private int isWin = 0;
+        public RobonControl robonControl;
+        public float timeDelayNextLevel = 1;
         
         protected override void Awake()
         {
@@ -107,11 +110,37 @@ namespace DefaultNamespace
         public void WinLevel()
         {
             this.isWin = 1;
-
-            AudioSource sound = GameObject.Find("CompletedLevel").GetComponent<AudioSource>();
-            sound.Play();
+            StartCoroutine(NextLevel());
+            
         }
 
+        public virtual void RobonDie()
+        {
+            if (GameManager.Instance.IsLose()) return;
+            
+            //this.RespawnBin();
+        }
+
+        private IEnumerator NextLevel()
+        {
+            robonControl.rb.bodyType = RigidbodyType2D.Static;
+            if (SceneManager.GetActiveScene().buildIndex == 3)
+            {
+                winGameUI.gameObject.SetActive(true);
+                robonControl.animator.SetTrigger("isWinGame");
+                AudioSource winGameSound = GameObject.Find("WinGameSound").GetComponent<AudioSource>();
+                winGameSound.Play();
+            }
+            else
+            {
+                AudioSource sound = GameObject.Find("CompletedLevel").GetComponent<AudioSource>();
+                sound.Play();
+                robonControl.animator.SetTrigger("isNextLevel");
+                winLevelUI.gameObject.SetActive(true);
+                yield return new WaitForSeconds(timeDelayNextLevel);
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+            }
+        }
         protected virtual void LoseGame()
         {
             if (IsLose() && this.loseGameUI != null)

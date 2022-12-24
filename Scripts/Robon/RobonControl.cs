@@ -5,8 +5,9 @@ namespace DefaultNamespace
 {
     public class RobonControl : Movement
     {
-        [SerializeField] protected Rigidbody2D rb;
+        public Rigidbody2D rb;
         [SerializeField] float moveSpeed = 3f;
+        public Animator animator;
         
         protected override void LoadComponents()
         {
@@ -24,12 +25,20 @@ namespace DefaultNamespace
         protected override void Update()
         {
             this.Move();
+            SetAnimaiton();
+        }
+
+        private void SetAnimaiton()
+        {
+            animator.SetFloat("Horizontal", InputManager.Instance.MoveButtonVector3.x);
+            animator.SetFloat("Vertical", InputManager.Instance.MoveButtonVector3.y);
+            animator.SetFloat("Speed", InputManager.Instance.MoveButtonVector3.sqrMagnitude);
         }
 
         protected void FixedUpdate()
         {
             this.RobonMoving();
-            this.RotateToDirection();
+            //this.RotateToDirection();
         }
 
         protected virtual void RobonMoving()
@@ -38,12 +47,12 @@ namespace DefaultNamespace
                 InputManager.Instance.MoveButtonVector3.y * moveSpeed);
         }
 
-        protected virtual void RotateToDirection()
-        {
-            Vector3 directionMove = InputManager.Instance.MoveButtonVector3;
-            if (directionMove == Vector3.zero) return;
-            float rotationZ = Mathf.Atan2(directionMove.y, directionMove.x) * Mathf.Rad2Deg;
-            transform.parent.rotation = Quaternion.Euler(0f, 0f, rotationZ + 90);
-        }
+        // protected virtual void RotateToDirection()
+        // {
+        //     Vector3 directionMove = InputManager.Instance.MoveButtonVector3;
+        //     if (directionMove == Vector3.zero) return;
+        //     float rotationZ = Mathf.Atan2(directionMove.y, directionMove.x) * Mathf.Rad2Deg;
+        //     transform.parent.rotation = Quaternion.Euler(0f, 0f, rotationZ + 90);
+        // }
     }
 }

@@ -7,7 +7,8 @@ namespace DefaultNamespace
     {
         [SerializeField] protected int hpMax = 3;
         public int hp;
-
+        public RobonControl robonControl;
+        
         private void Start()
         {
             this.hp = hpMax;
@@ -20,9 +21,8 @@ namespace DefaultNamespace
         
         public void Deduct(int hpDeduct)
         {
-            AudioSource sound = GameObject.Find("DieSound").GetComponent<AudioSource>();
-            sound.Play();
-
+            
+            
             this.hp -= hpDeduct;
 
             if (this.hp <= 0)

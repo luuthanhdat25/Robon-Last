@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 namespace DefaultNamespace
@@ -7,6 +8,8 @@ namespace DefaultNamespace
         [SerializeField] protected Transform robonTransform;
         [SerializeField] protected GameObject robonRespawnPoint;
         [SerializeField] protected GameObject robonAfterDiePoint;
+        public float timeRespawnDie = 1f;
+        public RobonControl robonControl;
 
         protected override void LoadComponents()
         {
@@ -29,13 +32,24 @@ namespace DefaultNamespace
         public virtual void RobonDie()
         {
             if (GameManager.Instance.IsLose()) return;
-            this.robonTransform.position = robonRespawnPoint.transform.position;
-            GameManager.Instance.robonHealth.Deduct(1);
-            GameManager.Instance.timeBar.SetMaxTime(GameManager.Instance.TimeMax);
-            GameManager.Instance.timeBar.hadWarning = false;
+            StartCoroutine(DelayTransition());
             //this.RespawnBin();
         }
 
+        private IEnumerator DelayTransition()
+        {
+            AudioSource sound = GameObject.Find("DieSound").GetComponent<AudioSource>();
+            robonControl.animator.SetBool("isDeath",true);
+            robonControl.rb.bodyType = RigidbodyType2D.Static;
+            sound.Play();
+            yield return new WaitForSeconds(timeRespawnDie);
+            robonControl.animator.SetBool("isDeath",false);
+            this.robonTransform.position = robonRespawnPoint.transform.position;
+            GameManager.Instance.robonHealth.Deduct(1);
+            robonControl.rb.bodyType = RigidbodyType2D.Dynamic;
+            GameManager.Instance.timeBar.SetMaxTime(GameManager.Instance.TimeMax);
+            GameManager.Instance.timeBar.hadWarning = false;
+        }
         public void RobonMoveToDeathZone()
         {
             this.robonTransform.position = this.robonAfterDiePoint.transform.position;
