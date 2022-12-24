@@ -24,7 +24,7 @@ public class MainUIManager : MonoBehaviour
 
     public void Replay()
     {
-        this.ResumeGame();
+        this.PauseGameUI();
         GameManager.Instance.robon.gameObject.SetActive(true);
         GameManager.Instance.robonHealth.ReBorn();
         GameManager.Instance.robonRespawn.RobonCompleteBox();
@@ -35,7 +35,7 @@ public class MainUIManager : MonoBehaviour
 
     private void GetEscapeButton()
     {
-        if (Input.GetKeyDown(KeyCode.Escape)) this.PauseGameUI();
+        if (Input.GetKeyDown(KeyCode.Escape) && pauseUI != null) this.PauseGameUI();
     }
 
     public void ReloadLevel1()
@@ -70,8 +70,9 @@ public class MainUIManager : MonoBehaviour
     {
         Time.timeScale = previousTimeScale;
         //Active audio
-        this.pauseUI.SetActive(false);
         gameIsPaused = false;
+        this.pauseUI.SetActive(false);
+        
     }
 
 

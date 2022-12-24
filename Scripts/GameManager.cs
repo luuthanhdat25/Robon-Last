@@ -27,11 +27,13 @@ namespace DefaultNamespace
         public Transform loseGameUI;
         public Transform winLevelUI;
         public Transform winGameUI;
+        public Transform huD;
+        public Transform pauseUI;
         private int isWin = 0;
         public RobonControl robonControl;
         public float timeDelayNextLevel = 1;
         public GameObject robon;
-        
+        public int levelNumber;
         protected override void Awake()
         {
             Application.targetFrameRate = 60;
@@ -100,7 +102,7 @@ namespace DefaultNamespace
         
         protected virtual void isWinLevel()
         {
-            if (this.isWin == 1)
+            if (this.isWin == 1 && levelNumber != 3)
             {
                 winLevelUI.gameObject.SetActive(true);
             }
@@ -115,21 +117,28 @@ namespace DefaultNamespace
         private IEnumerator NextLevel()
         {
             robonControl.rb.bodyType = RigidbodyType2D.Static;
-            if (SceneManager.GetActiveScene().buildIndex == 3)
+            if (levelNumber == 3)
             {
+                huD.gameObject.SetActive(false);
                 winGameUI.gameObject.SetActive(true);
                 robonControl.animator.SetTrigger("isWinGame");
                 AudioSource winGameSound = GameObject.Find("WinGameSound").GetComponent<AudioSource>();
                 winGameSound.Play();
+                AudioSource bgSound = GameObject.Find("BackgroundSound").GetComponent<AudioSource>();
+                bgSound.Pause();
+                Destroy(pauseUI.gameObject);
             }
             else
             {
                 AudioSource sound = GameObject.Find("CompletedLevel").GetComponent<AudioSource>();
                 sound.Play();
                 robonControl.animator.SetTrigger("isNextLevel");
-                winLevelUI.gameObject.SetActive(true);
-                yield return new WaitForSeconds(timeDelayNextLevel);
-                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+                if (winLevelUI != null)
+                {
+                    winLevelUI.gameObject.SetActive(true);
+                    yield return new WaitForSeconds(timeDelayNextLevel);
+                    SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+                }
             }
         }
         public virtual void LoseGame()

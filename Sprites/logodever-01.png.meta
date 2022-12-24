@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: ef588646be635e247b1570cefdfabdf5
+guid: bfa6ee35f09ecd34499702c2ac70b3bc
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -33,7 +33,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 0
+    filterMode: 1
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -42,12 +42,12 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 2
+  spriteMode: 1
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 32
+  spritePixelsToUnits: 100
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -63,7 +63,7 @@ TextureImporter:
   textureFormatSet: 0
   ignorePngGamma: 0
   applyGammaDecoding: 0
-  cookieLightType: 1
+  cookieLightType: 0
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
@@ -127,28 +127,7 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites:
-    - serializedVersion: 2
-      name: Trap_Spike_Run_0
-      rect:
-        serializedVersion: 2
-        x: 1
-        y: 90
-        width: 31
-        height: 31
-      alignment: 9
-      pivot: {x: 0.50012344, y: 0.7}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: bb667f13a81b2914cbb1b750fccc538a
-      internalID: 599355686
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
+    sprites: []
     outline: []
     physicsShape: []
     bones: []
@@ -159,19 +138,7 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable:
-      Trap_Spike_Run_9: 617174723
-      Trap_Spike_Run_10: 801163248
-      Trap_Spike_Run_6: -2011130880
-      Trap_Spike_Run_5: 1706486422
-      Trap_Spike_Run_8: 1620263872
-      Trap_Spike_Run_2: -183569068
-      Trap_Spike_Run_7: 925706924
-      Trap_Spike_Run_0: 599355686
-      Trap_Spike_Run_11: -368728498
-      Trap_Spike_Run_4: 737540477
-      Trap_Spike_Run_1: -577598879
-      Trap_Spike_Run_3: 2047587510
+    nameFileIdTable: {}
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

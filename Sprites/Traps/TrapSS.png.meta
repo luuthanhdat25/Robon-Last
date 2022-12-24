@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: ef588646be635e247b1570cefdfabdf5
+guid: 7ce0ba1ce1cf2424793b4be22868a4ee
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -63,14 +63,14 @@ TextureImporter:
   textureFormatSet: 0
   ignorePngGamma: 0
   applyGammaDecoding: 0
-  cookieLightType: 1
+  cookieLightType: 0
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -129,22 +129,22 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Trap_Spike_Run_0
+      name: 319407622_2110639172454800_8809868824827327636_n_0
       rect:
         serializedVersion: 2
-        x: 1
-        y: 90
-        width: 31
-        height: 31
-      alignment: 9
-      pivot: {x: 0.50012344, y: 0.7}
+        x: 0
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: bb667f13a81b2914cbb1b750fccc538a
-      internalID: 599355686
+      spriteID: 10f9a36f865e3ef4183e70fa51e450a0
+      internalID: 516264245
       vertices: []
       indices: 
       edges: []
@@ -160,18 +160,8 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Trap_Spike_Run_9: 617174723
-      Trap_Spike_Run_10: 801163248
-      Trap_Spike_Run_6: -2011130880
-      Trap_Spike_Run_5: 1706486422
-      Trap_Spike_Run_8: 1620263872
-      Trap_Spike_Run_2: -183569068
-      Trap_Spike_Run_7: 925706924
-      Trap_Spike_Run_0: 599355686
-      Trap_Spike_Run_11: -368728498
-      Trap_Spike_Run_4: 737540477
-      Trap_Spike_Run_1: -577598879
-      Trap_Spike_Run_3: 2047587510
+      319407622_2110639172454800_8809868824827327636_n_0: 516264245
+      319407622_2110639172454800_8809868824827327636_n_1: -1194227147
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
