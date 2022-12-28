@@ -1,41 +1,58 @@
 using System;
+using Audio;
 using DefaultNamespace;
+using DefaultNamespace.UI;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class MainUIManager : MonoBehaviour
+public class MainUIManager : RepeatMonobehaviour
 {
+    private static MainUIManager instance;
+    public static MainUIManager Instance { get => instance; }
+    
+    public GameObject menuGameUI;
+    public GameObject pauseGameUI;
+    public GameObject hudGameUI;
+    public GameObject loseGameUI;
+    public GameObject winLevelGameUI;
+    public GameObject winGameUI;
+    public TimeBar timeBarGameUI;
+    
+    private static bool gameIsPaused = false;
     private float previousTimeScale = 1;
-    public static bool gameIsPaused = false;
-    public GameObject menuUI;
-    public GameObject pauseUI;
-    public GameObject hubUI;
+    
+    protected override void Awake()
+    {
+        MainUIManager.instance = this;    
+    }
 
     private void Update()
     {
+        if (!CanPauseGame()) return;
         GetEscapeButton();
     }
 
     public void PlayGame()
     {
-        this.hubUI.SetActive(true);
-        GameManager.Instance.robonRespawn.RobonCompleteBox();
+        this.hudGameUI.SetActive(true);
+        GameManager.Instance.robonRespawn.RobonStartPosition();
     }
 
+    
     public void Replay()
     {
-        this.PauseGameUI();
-        GameManager.Instance.robon.gameObject.SetActive(true);
-        GameManager.Instance.robonHealth.ReBorn();
-        GameManager.Instance.robonRespawn.RobonCompleteBox();
+        this.ResumeGame();
+        loseGameUI.gameObject.SetActive(false);
         
-        AudioSource sound = GameObject.Find("BackgroundSound").GetComponent<AudioSource>();
-        sound.Play();
+        RobonCtrl.Instance.robonHealth.ReBorn();
+        GameManager.Instance.robonRespawn.RobonStartPosition();
+
+        AudioManager.Instance.backgroundSound.Play();
     }
 
     private void GetEscapeButton()
     {
-        if (Input.GetKeyDown(KeyCode.Escape) && pauseUI != null) this.PauseGameUI();
+        if (Input.GetKeyDown(KeyCode.Escape) && pauseGameUI != null) this.PauseGameUI();
     }
 
     public void ReloadLevel1()
@@ -56,25 +73,34 @@ public class MainUIManager : MonoBehaviour
         }
     }
 
+    private bool CanPauseGame()
+    {
+        if (menuGameUI == null)
+        {
+            if (winLevelGameUI.gameObject.activeSelf || winGameUI.gameObject.activeSelf ||
+                loseGameUI.gameObject.activeSelf) return false;
+        }else if (winLevelGameUI.gameObject.activeSelf || winGameUI.gameObject.activeSelf || 
+                  loseGameUI.gameObject.activeSelf || menuGameUI.gameObject.activeSelf)
+        {
+            return false;
+        }
+        return true;
+    }
+    
     public void PauseGame()
     {
-        previousTimeScale = Time.timeScale;
         Time.timeScale = 0;
-        //Pause Audio
         gameIsPaused = true;
-        this.pauseUI.SetActive(true);
+        this.pauseGameUI.SetActive(true);
     }
     
     
     public void ResumeGame()
     {
         Time.timeScale = previousTimeScale;
-        //Active audio
         gameIsPaused = false;
-        this.pauseUI.SetActive(false);
-        
+        pauseGameUI.gameObject.SetActive(false);
     }
-
 
     public void QuitGame()
     {

@@ -1,58 +1,33 @@
-using System.Collections;
 using UnityEngine;
 
 namespace DefaultNamespace
 {
     public class RobonControl : Movement
     {
-        public Rigidbody2D rb;
         [SerializeField] float moveSpeed = 3f;
-        public Animator animator;
         
-        protected override void LoadComponents()
-        {
-            base.LoadComponents();
-            this.LoadRigidbody();
-        }
-        
-        protected virtual void LoadRigidbody()
-        {
-            if (this.rb != null) return;
-            this.rb = transform.parent.GetComponent<Rigidbody2D>();
-            Debug.Log(transform.name + ": LoadRigidbody", gameObject);
-        }
-
         protected override void Update()
         {
             this.Move();
-            SetAnimaiton();
+            this.SetAnimaiton();
         }
 
         private void SetAnimaiton()
         {
-            animator.SetFloat("Horizontal", InputManager.Instance.MoveButtonVector3.x);
-            animator.SetFloat("Vertical", InputManager.Instance.MoveButtonVector3.y);
-            animator.SetFloat("Speed", InputManager.Instance.MoveButtonVector3.sqrMagnitude);
+            RobonCtrl.Instance.robonAnimator.SetFloat("Horizontal", InputManager.Instance.MoveButtonVector3.x);
+            RobonCtrl.Instance.robonAnimator.SetFloat("Vertical", InputManager.Instance.MoveButtonVector3.y);
+            RobonCtrl.Instance.robonAnimator.SetFloat("Speed", InputManager.Instance.MoveButtonVector3.sqrMagnitude);
         }
 
         protected void FixedUpdate()
         {
             this.RobonMoving();
-            //this.RotateToDirection();
         }
 
         protected virtual void RobonMoving()
         {
-            rb.velocity = new Vector2(InputManager.Instance.MoveButtonVector3.x * moveSpeed,
+            RobonCtrl.Instance.rigidbody2D.velocity = new Vector2(InputManager.Instance.MoveButtonVector3.x * moveSpeed,
                 InputManager.Instance.MoveButtonVector3.y * moveSpeed);
         }
-
-        // protected virtual void RotateToDirection()
-        // {
-        //     Vector3 directionMove = InputManager.Instance.MoveButtonVector3;
-        //     if (directionMove == Vector3.zero) return;
-        //     float rotationZ = Mathf.Atan2(directionMove.y, directionMove.x) * Mathf.Rad2Deg;
-        //     transform.parent.rotation = Quaternion.Euler(0f, 0f, rotationZ + 90);
-        // }
     }
 }

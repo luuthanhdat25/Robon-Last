@@ -1,30 +1,17 @@
-using System;
-using DefaultNamespace;
 using DefaultNamespace.Traps;
 using UnityEngine;
 
 [RequireComponent(typeof(BoxCollider2D))]
 public class RobonCollider : RepeatMonobehaviour
 {
-    public Rigidbody2D rb;
     [SerializeField] protected BoxCollider2D boxCollider;
-    [SerializeField] protected RobonControl robonControl;
 
     protected override void LoadComponents()
     {
         base.LoadComponents();
-        this.LoadRigidbody();
         this.LoadCollider();
-        this.LoadRobonControl();
     }
-    protected virtual void LoadRigidbody()
-    {
-        if (this.rb != null) return;
-        this.rb = GetComponent<Rigidbody2D>();
-        this.rb.gravityScale = 0;
-        this.rb.freezeRotation = true;
-        Debug.Log(transform.name + ": LoadRigidbody", gameObject);
-    }
+    
     protected virtual void LoadCollider()
     {
         if (this.boxCollider != null) return;
@@ -33,12 +20,6 @@ public class RobonCollider : RepeatMonobehaviour
         Debug.Log(transform.name + ": LoadBoxCollider", gameObject);
     }
     
-    protected virtual void LoadRobonControl()
-    {
-        if (this.robonControl != null) return;
-        this.robonControl = GetComponentInChildren<RobonControl>();
-    }
-
     protected void OnTriggerEnter2D(Collider2D col)
     {
         Send(col.transform);

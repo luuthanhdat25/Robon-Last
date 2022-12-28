@@ -1,6 +1,7 @@
 using DefaultNamespace.UI;
 using UnityEngine;
 using System.Collections;
+using Audio;
 using UnityEngine.SceneManagement;
 
 namespace DefaultNamespace
@@ -12,27 +13,10 @@ namespace DefaultNamespace
         [Header("SettingData")]
         [SerializeField] protected float timeMax = 30f;
         public float TimeMax { get => timeMax; }
-        //[SerializeField] protected int coinScore = 10;
-        //public int CoinScore { get => coinScore; }
-        //[SerializeField] protected int boxScore = 50;
-        //public int BoxScore { get => boxScore; }
         [Header("LoadComponents")]
-        //public RobonCollect robonCollect;
-        //public BinController binController;
-        //[SerializeField] protected BoxController boxController;
-        public TimeBar timeBar;
-        //public RobonScore robonScore;
         public RobonRespawn robonRespawn;
-        public RobonHealth robonHealth;
-        public Transform loseGameUI;
-        public Transform winLevelUI;
-        public Transform winGameUI;
-        public Transform huD;
-        public Transform pauseUI;
         private int isWin = 0;
-        public RobonControl robonControl;
         public float timeDelayNextLevel = 1;
-        public GameObject robon;
         public int levelNumber;
         protected override void Awake()
         {
@@ -40,71 +24,12 @@ namespace DefaultNamespace
             if (GameManager.instance != null) Debug.LogError("Only 1 GameManager can exist!");
             GameManager.instance = this;    
         }
-        protected override void LoadComponents()
-        {
-            base.LoadComponents();
-            this.LoadTimeBar();
-            // this.LoadRobonCollet();
-            // this.LoadBinController();
-            // this.LoadBoxCompleted();
-            // this.LoadRobonScore();
-            this.LoadRobonRespawn();
-            this.LoadRobonHeath();
-        }
-
-        protected virtual void LoadTimeBar()
-        {
-            if (this.timeBar != null) return;
-            this.timeBar = GameObject.Find("TimeBar").GetComponent<TimeBar>();
-        }
-        
-        protected virtual void LoadRobonHeath()
-        {
-            if (this.robonHealth != null) return;
-            this.robonHealth = GameObject.Find("RobonHealth").GetComponent<RobonHealth>();
-        }
-        // protected virtual void LoadRobonCollet()
-        // {
-        //     if (this.robonCollect != null) return;
-        //     this.robonCollect = GameObject.Find("RobonCollect").GetComponent<RobonCollect>();
-        // }
-        
-        // protected virtual void LoadBoxCompleted()
-        // {
-        //     if (this.boxController != null) return;
-        //     this.boxController = GameObject.Find("BoxManager").GetComponent<BoxController>();
-        // }
-        
-        // protected virtual void LoadBinController()
-        // {
-        //     if (this.binController != null) return;
-        //     this.binController = GameObject.Find("BinManager").GetComponent<BinController>();
-        // }
-        
-        // protected virtual void LoadRobonScore()
-        // {
-        //     if (this.robonScore != null) return;
-        //     this.robonScore = GameObject.Find("RobonScore").GetComponent<RobonScore>();
-        // }
-        
-        protected virtual void LoadRobonRespawn()
-        {
-            if (this.robonRespawn != null) return;
-            this.robonRespawn = GameObject.Find("RobonRespawn").GetComponent<RobonRespawn>();
-        }
-
-        private void FixedUpdate()
-        {
-            this.isWinLevel();
-            this.LoseGame();
-        }
-        
         
         protected virtual void isWinLevel()
         {
             if (this.isWin == 1 && levelNumber != 3)
             {
-                winLevelUI.gameObject.SetActive(true);
+                MainUIManager.Instance.winGameUI.gameObject.SetActive(true);
             }
         }
 
@@ -116,42 +41,30 @@ namespace DefaultNamespace
 
         private IEnumerator NextLevel()
         {
-            robonControl.rb.bodyType = RigidbodyType2D.Static;
+            RobonCtrl.Instance.rigidbody2D.bodyType = RigidbodyType2D.Static;
             if (levelNumber == 3)
             {
-                huD.gameObject.SetActive(false);
-                winGameUI.gameObject.SetActive(true);
-                robonControl.animator.SetTrigger("isWinGame");
-                AudioSource winGameSound = GameObject.Find("WinGameSound").GetComponent<AudioSource>();
-                winGameSound.Play();
-                AudioSource bgSound = GameObject.Find("BackgroundSound").GetComponent<AudioSource>();
-                bgSound.Pause();
-                Destroy(pauseUI.gameObject);
+                MainUIManager.Instance.hudGameUI.gameObject.SetActive(false);
+                MainUIManager.Instance.winGameUI.gameObject.SetActive(true);
+                RobonCtrl.Instance.robonAnimator.SetTrigger("isWinGame");
+                
+                AudioManager.Instance.winGameSound.Play();
+                AudioManager.Instance.backgroundSound.Pause();
             }
             else
             {
-                AudioSource sound = GameObject.Find("CompletedLevel").GetComponent<AudioSource>();
-                sound.Play();
-                robonControl.animator.SetTrigger("isNextLevel");
-                if (winLevelUI != null)
+                AudioManager.Instance.completedLevel.Play();
+                AudioManager.Instance.backgroundSound.Pause();
+                
+                RobonCtrl.Instance.robonAnimator.SetTrigger("isNextLevel");
+                
+                if (MainUIManager.Instance.winGameUI != null)
                 {
-                    winLevelUI.gameObject.SetActive(true);
+                    MainUIManager.Instance.winGameUI.gameObject.SetActive(true);
                     yield return new WaitForSeconds(timeDelayNextLevel);
                     SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
                 }
             }
-        }
-        public virtual void LoseGame()
-        {
-            if (IsLose())
-            {
-                loseGameUI.gameObject.SetActive(true);
-            }
-        }
-        
-        public virtual bool IsLose()
-        {
-            return robonHealth.hp <= 0;
         }
     }
 }

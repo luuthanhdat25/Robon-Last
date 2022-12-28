@@ -41,7 +41,7 @@ namespace DefaultNamespace.UI
 
         protected virtual void OverTime()
         {
-            if (GameManager.Instance.IsLose()) return;
+            if (RobonCtrl.Instance.robonHealth.IsLose()) return;
             currentTime -= Time.deltaTime;
             SetTime();
 
@@ -52,7 +52,7 @@ namespace DefaultNamespace.UI
                 sound.Play();
             }
 
-            if (currentTime <= 0) GameManager.Instance.robonRespawn.RobonDie();
+            if (currentTime <= 0) GameManager.Instance.robonRespawn.RobonDeath();
         }
 
         public virtual void SetTime()

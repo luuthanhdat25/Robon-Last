@@ -1,7 +1,5 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace DefaultNamespace.UI
 {
@@ -32,7 +30,7 @@ namespace DefaultNamespace.UI
         {
             for (int i = 0; i < heartImages.Count; i++)
             {
-                if (i < GameManager.Instance.robonHealth.hp) heartImages[i].gameObject.SetActive(true);
+                if (i < RobonCtrl.Instance.robonHealth.Hp) heartImages[i].gameObject.SetActive(true);
                 else heartImages[i].gameObject.SetActive(false);
             }
         }

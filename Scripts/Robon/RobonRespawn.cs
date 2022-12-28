@@ -1,93 +1,87 @@
 using System.Collections;
+using Audio;
+using Camera;
 using UnityEngine;
 
 namespace DefaultNamespace
 {
     public class RobonRespawn : RepeatMonobehaviour
     {
+        [SerializeField] protected CameraManager cameraManager;
         [SerializeField] protected Transform robonTransform;
-        [SerializeField] protected GameObject robonRespawnPoint;
-        public float timeRespawnDie = 1f;
-        public RobonControl robonControl;
-        public Animator cam;
+        public Transform robonRespawnPoint;
+        
+        [SerializeField] protected float timeRespawnDie = 1f;
 
         protected override void LoadComponents()
         {
             base.LoadComponents();
             this.LoadRobon();
-            this.LoadRobonRespawnPoint();
+            this.LoadCameraManager();
         }
         
-        protected virtual void LoadRobonRespawnPoint()
-        {
-            if (this.robonRespawnPoint != null) return;
-            this.robonRespawnPoint = GameObject.Find("RobonRespawnPoint");
-        }
         protected virtual void LoadRobon()
         {
             if (this.robonTransform != null) return;
             this.robonTransform = transform.parent;
         }
         
-        public virtual void RobonDie()
+        protected virtual void LoadCameraManager()
         {
-            if (GameManager.Instance.IsLose()) return;
-            cam.SetTrigger("Shake");
-            StartCoroutine(DelayTransition());
-            //this.RespawnBin();
+            if (this.cameraManager != null) return;
+            this.cameraManager = GameObject.Find("Camera").GetComponent<CameraManager>();
         }
-
+        
+        public virtual void RobonDeath()
+        {
+            this.DisableMovement();
+            RobonCtrl.Instance.robonHealth.Deduct(1);
+            cameraManager.cameraAnimator.SetTrigger("Shake");
+            AudioManager.Instance.dieSound.Play();
+            
+            if (RobonCtrl.Instance.robonHealth.IsLose())
+            {
+                AudioManager.Instance.backgroundSound.Pause();
+                StartCoroutine(DelayLoseUI());
+            }else StartCoroutine(DelayTransition());
+        }
+        
         private IEnumerator DelayTransition()
         {
-            AudioSource sound = GameObject.Find("DieSound").GetComponent<AudioSource>();
-            robonControl.animator.SetBool("isDeath",true);
-            robonControl.rb.bodyType = RigidbodyType2D.Static;
-            sound.Play();
-            GameManager.Instance.timeBar.SetMaxTime(GameManager.Instance.TimeMax);
+            MainUIManager.Instance.timeBarGameUI.SetMaxTime(GameManager.Instance.TimeMax);
+
             yield return new WaitForSeconds(timeRespawnDie);
-            robonControl.animator.SetBool("isDeath",false);
-            this.robonTransform.position = robonRespawnPoint.transform.position;
-            GameManager.Instance.robonHealth.Deduct(1);
-            robonControl.rb.bodyType = RigidbodyType2D.Dynamic;
-            GameManager.Instance.timeBar.hadWarning = false;
-            if (!GameManager.Instance.IsLose())
-            {
-                AudioSource buttonSound = GameObject.Find("UIButtonSound").GetComponent<AudioSource>();
-                buttonSound.Play();
-            }
+            
+            this.EnableMovement();
+            MainUIManager.Instance.timeBarGameUI.hadWarning = false;
+            AudioManager.Instance.uiButtonSound.Play();
         }
-
-
-        public virtual void RobonCompleteBox()
+        
+        protected virtual void DisableMovement()
         {
-            if (GameManager.Instance.IsLose()) return;
-            this.robonTransform.position = robonRespawnPoint.transform.position;
-            GameManager.Instance.timeBar.SetMaxTime(GameManager.Instance.TimeMax);
+            RobonCtrl.Instance.rigidbody2D.bodyType = RigidbodyType2D.Static;
+            RobonCtrl.Instance.robonAnimator.SetBool("isDeath", true);
         }
 
-        // protected virtual void RespawnBin()
-        // {
-        //     GameManager.Instance.robonCollect.isCollected = false;
-        //     
-        //     if (GameManager.Instance.binController.isFbinCollected == true)
-        //     {
-        //         GameManager.Instance.binController.fBin.gameObject.SetActive(true);
-        //         GameManager.Instance.binController.isFbinCollected = false;
-        //     }
-        //
-        //     if (GameManager.Instance.binController.isPbinCollected == true)
-        //     {
-        //         GameManager.Instance.binController.pBin.gameObject.SetActive(true);
-        //         GameManager.Instance.binController.isPbinCollected = false;
-        //     }
-        //
-        //     if (GameManager.Instance.binController.isTbinCollected == true)
-        //     {
-        //         GameManager.Instance.binController.tBin.gameObject.SetActive(true);
-        //         GameManager.Instance.binController.isTbinCollected = false;
-        //     }
-        // }
+        protected virtual void EnableMovement()
+        {
+            RobonCtrl.Instance.rigidbody2D.bodyType = RigidbodyType2D.Dynamic;
+            RobonCtrl.Instance.robonAnimator.SetBool("isDeath", false);
+            robonTransform.position = robonRespawnPoint.transform.position;
+        }
         
-        
+        public virtual void RobonStartPosition()
+        {
+            if (RobonCtrl.Instance.robonHealth.IsLose()) return;
+            this.EnableMovement();
+            MainUIManager.Instance.timeBarGameUI.SetMaxTime(GameManager.Instance.TimeMax);
+        }
+
+        private IEnumerator DelayLoseUI()
+        {
+            yield return new WaitForSeconds(2f);
+            AudioManager.Instance.loseGameSound.Play();
+            MainUIManager.Instance.loseGameUI.gameObject.SetActive(true);
+        }
     }
 }

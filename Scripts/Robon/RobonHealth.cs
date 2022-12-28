@@ -1,37 +1,36 @@
 using System;
+using System.Collections;
+using Audio;
 using UnityEngine;
 
 namespace DefaultNamespace
 {
-    public class RobonHealth : RepeatMonobehaviour
+    public class RobonHealth : MonoBehaviour
     {
         [SerializeField] protected int hpMax = 3;
-        public int hp;
-        public RobonControl robonControl;
+        [SerializeField] protected int hp;
+        public int Hp { get => hp; }
         
         private void Start()
         {
             this.hp = hpMax;
         }
 
-        public void ReBorn()
+        public virtual void ReBorn()
         {
             this.hp = hpMax;
+        }
+        
+        public virtual bool IsLose()
+        {
+            return hp <= 0;
         }
         
         public void Deduct(int hpDeduct)
         {
             this.hp -= hpDeduct;
-            
-            if (this.hp <= 0)
-            {
-                AudioSource bgSound = GameObject.Find("BackgroundSound").GetComponent<AudioSource>();
-                bgSound.Pause();
-
-                AudioSource loseSound = GameObject.Find("LoseGameSound").GetComponent<AudioSource>();
-                loseSound.Play();
-                transform.parent.gameObject.SetActive(false);
-            }
         }
+        
+        
     }
 }
