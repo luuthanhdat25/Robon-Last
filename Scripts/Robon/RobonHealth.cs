@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using Audio;
 using UnityEngine;
 
 namespace DefaultNamespace

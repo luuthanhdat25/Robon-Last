@@ -1,4 +1,3 @@
-using DefaultNamespace.UI;
 using UnityEngine;
 using System.Collections;
 using Audio;
