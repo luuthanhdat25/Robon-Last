@@ -7,6 +7,4 @@ public class WinZoneCollider : ReceiverBoxCollider
     {
         GameManager.Instance.WinLevel();
     }
-    
-    
 }

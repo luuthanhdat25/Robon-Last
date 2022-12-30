@@ -15809,7 +15809,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8addcd5549fb4108a3ee8d037e0de901, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hpMax: 3
   hp: 0
 --- !u!1 &858706525
 GameObject:
@@ -16914,8 +16913,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rigidbody2D: {fileID: 896480184}
+  robonCollider: {fileID: 896480182}
   robonAnimator: {fileID: 3576012065761496045}
   robonHealth: {fileID: 855958754}
+  robonRespawn: {fileID: 666755503}
 --- !u!1 &906609428
 GameObject:
   m_ObjectHideFlags: 0
@@ -22216,7 +22217,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 2073830244}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: UnityEngine.AudioSource, UnityEngine
         m_MethodName: Play
         m_Mode: 1
@@ -23504,10 +23505,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c1c110b855b4a16a4c0c76392ea9e50, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hpMax: 3
   timeMax: 30
-  robonRespawn: {fileID: 666755503}
-  timeDelayNextLevel: 3.5
   levelNumber: 1
+  timeDelayNextLevel: 3.5
 --- !u!4 &1299665915
 Transform:
   m_ObjectHideFlags: 0
@@ -34177,6 +34178,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1949695102}
   - component: {fileID: 1949695103}
+  - component: {fileID: 1949695104}
   m_Layer: 0
   m_Name: AudioManager
   m_TagString: Untagged
@@ -34225,6 +34227,26 @@ MonoBehaviour:
   completedLevel: {fileID: 921371000}
   warningSound: {fileID: 2109355492}
   uiButtonSound: {fileID: 2073830244}
+--- !u!95 &1949695104
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1949695101}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 91fabdccf5549f144a6288ec04ad959e, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &1951798701
 GameObject:
   m_ObjectHideFlags: 0

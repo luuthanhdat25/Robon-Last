@@ -6,6 +6,6 @@ public class HacksawCollider : ReceiverCircleCollider
 {
     public override void Received()
     {
-        GameManager.Instance.robonRespawn.RobonDeath();
+        RobonCtrl.Instance.robonRespawn.RobonDeath();
     }
 }

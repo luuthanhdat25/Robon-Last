@@ -4,7 +4,7 @@ using UnityEngine;
 [RequireComponent(typeof(BoxCollider2D))]
 public class RobonCollider : RepeatMonobehaviour
 {
-    [SerializeField] protected BoxCollider2D boxCollider;
+    public BoxCollider2D boxCollider;
 
     protected override void LoadComponents()
     {
@@ -24,21 +24,11 @@ public class RobonCollider : RepeatMonobehaviour
     {
         Send(col.transform);
     }
-
-    protected void OnCollisionEnter2D(Collision2D col)
-    {
-        Send(col.transform);
-    }
-
+    
     public virtual void Send(Transform obj)
     {
         Receiver receiver = obj.GetComponent<Receiver>();
         if (receiver == null) return;
-        this.Send(receiver);
-    }
-    
-    public virtual void Send(Receiver receiver)
-    {
         receiver.Received();
     }
 }

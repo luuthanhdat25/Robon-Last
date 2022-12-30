@@ -35,8 +35,10 @@ namespace DefaultNamespace
         public virtual void RobonDeath()
         {
             this.DisableMovement();
-            RobonCtrl.Instance.robonHealth.Deduct(1);
+            RobonCtrl.Instance.robonAnimator.SetBool("isDeath", true);
             cameraManager.cameraAnimator.SetTrigger("Shake");
+            
+            RobonCtrl.Instance.robonHealth.Deduct(1);
             AudioManager.Instance.dieSound.Play();
             
             if (RobonCtrl.Instance.robonHealth.IsLose())
@@ -57,15 +59,16 @@ namespace DefaultNamespace
             AudioManager.Instance.uiButtonSound.Play();
         }
         
-        protected virtual void DisableMovement()
+        public virtual void DisableMovement()
         {
+            RobonCtrl.Instance.robonCollider.boxCollider.enabled = false;
             RobonCtrl.Instance.rigidbody2D.bodyType = RigidbodyType2D.Static;
-            RobonCtrl.Instance.robonAnimator.SetBool("isDeath", true);
         }
 
         protected virtual void EnableMovement()
         {
             RobonCtrl.Instance.rigidbody2D.bodyType = RigidbodyType2D.Dynamic;
+            RobonCtrl.Instance.robonCollider.boxCollider.enabled = true;
             RobonCtrl.Instance.robonAnimator.SetBool("isDeath", false);
             robonTransform.position = robonRespawnPoint.transform.position;
         }

@@ -5,6 +5,6 @@ public class SpikeCollider : ReceiverBoxCollider
 {
     public override void Received()
     {
-        GameManager.Instance.robonRespawn.RobonDeath();
+        RobonCtrl.Instance.robonRespawn.RobonDeath();
     }
 }

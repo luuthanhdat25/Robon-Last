@@ -35,7 +35,7 @@ public class MainUIManager : RepeatMonobehaviour
     public void PlayGame()
     {
         this.hudGameUI.SetActive(true);
-        GameManager.Instance.robonRespawn.RobonStartPosition();
+        RobonCtrl.Instance.robonRespawn.RobonStartPosition();
     }
 
     
@@ -45,8 +45,8 @@ public class MainUIManager : RepeatMonobehaviour
         loseGameUI.gameObject.SetActive(false);
         
         RobonCtrl.Instance.robonHealth.ReBorn();
-        GameManager.Instance.robonRespawn.RobonStartPosition();
-
+        RobonCtrl.Instance.robonRespawn.RobonStartPosition();
+    
         AudioManager.Instance.backgroundSound.Play();
     }
 
@@ -75,15 +75,9 @@ public class MainUIManager : RepeatMonobehaviour
 
     private bool CanPauseGame()
     {
-        if (menuGameUI == null)
-        {
-            if (winLevelGameUI.gameObject.activeSelf || winGameUI.gameObject.activeSelf ||
-                loseGameUI.gameObject.activeSelf) return false;
-        }else if (winLevelGameUI.gameObject.activeSelf || winGameUI.gameObject.activeSelf || 
-                  loseGameUI.gameObject.activeSelf || menuGameUI.gameObject.activeSelf)
-        {
-            return false;
-        }
+        if ((menuGameUI != null && menuGameUI.gameObject.activeSelf ) || 
+            (winLevelGameUI != null && winLevelGameUI.gameObject.activeSelf) || 
+            winGameUI.gameObject.activeSelf || loseGameUI.gameObject.activeSelf) return false;
         return true;
     }
     

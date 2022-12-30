@@ -8,9 +8,11 @@ namespace DefaultNamespace
         public static RobonCtrl Instance { get => instance; }
         
         public Rigidbody2D rigidbody2D;
+        public RobonCollider robonCollider;
         public Animator robonAnimator;
         public RobonHealth robonHealth;
-
+        public RobonRespawn robonRespawn;
+        
         protected override void Awake()
         {
             RobonCtrl.instance = this;    
@@ -22,6 +24,8 @@ namespace DefaultNamespace
             this.LoadRigidbody();
             this.LoadRobonAnimator();
             this.LoadRobonHeath();
+            this.LoadRobonRespawn();
+            this.LoadRobonCollider();
         }
         
         protected virtual void LoadRigidbody()
@@ -42,6 +46,18 @@ namespace DefaultNamespace
         {
             if (this.robonHealth != null) return;
             this.robonHealth = transform.GetComponentInChildren<RobonHealth>();
+        }
+        
+        protected virtual void LoadRobonRespawn()
+        {
+            if (this.robonRespawn != null) return;
+            this.robonRespawn = transform.GetComponentInChildren<RobonRespawn>();
+        }
+        
+        protected virtual void LoadRobonCollider()
+        {
+            if (this.robonCollider != null) return;
+            this.robonCollider = GetComponent<RobonCollider>();
         }
     }
 }

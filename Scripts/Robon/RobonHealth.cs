@@ -7,18 +7,17 @@ namespace DefaultNamespace
 {
     public class RobonHealth : MonoBehaviour
     {
-        [SerializeField] protected int hpMax = 3;
         [SerializeField] protected int hp;
         public int Hp { get => hp; }
         
         private void Start()
         {
-            this.hp = hpMax;
+            this.hp = GameManager.Instance.HpMax;
         }
 
         public virtual void ReBorn()
         {
-            this.hp = hpMax;
+            this.hp = GameManager.Instance.HpMax;
         }
         
         public virtual bool IsLose()
@@ -30,7 +29,5 @@ namespace DefaultNamespace
         {
             this.hp -= hpDeduct;
         }
-        
-        
     }
 }

@@ -34,10 +34,7 @@ namespace Box
                 Debug.Log(transform.name + "BoxComplted",gameObject.transform);
                 this.robonCollect.isCollected = false;
                 this.RestoreCollected();
-                GameManager.Instance.robonRespawn.RobonStartPosition();
-                //GameManager.Instance.robonScore.Collect(GameManager.Instance.BoxScore);
-
-                //Do animaiton
+                RobonCtrl.Instance.robonRespawn.RobonStartPosition();
                 this.gameObject.SetActive(false);
             }
         }

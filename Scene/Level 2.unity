@@ -7033,7 +7033,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 9009690499479529160}
         m_TargetAssemblyTypeName: UnityEngine.AudioSource, UnityEngine
         m_MethodName: Play
         m_Mode: 1
@@ -9148,7 +9148,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 9009690499479529160}
         m_TargetAssemblyTypeName: UnityEngine.AudioSource, UnityEngine
         m_MethodName: Play
         m_Mode: 1
@@ -14043,7 +14043,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8addcd5549fb4108a3ee8d037e0de901, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hpMax: 3
   hp: 0
 --- !u!1 &858706525
 GameObject:
@@ -14944,8 +14943,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rigidbody2D: {fileID: 896480184}
+  robonCollider: {fileID: 896480182}
   robonAnimator: {fileID: 3576012065761496045}
   robonHealth: {fileID: 855958754}
+  robonRespawn: {fileID: 666755503}
 --- !u!1 &906609428
 GameObject:
   m_ObjectHideFlags: 0
@@ -19513,7 +19514,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 9009690499479529160}
         m_TargetAssemblyTypeName: UnityEngine.AudioSource, UnityEngine
         m_MethodName: Play
         m_Mode: 1
@@ -20352,10 +20353,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c1c110b855b4a16a4c0c76392ea9e50, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hpMax: 3
   timeMax: 30
-  robonRespawn: {fileID: 666755503}
-  timeDelayNextLevel: 3.5
   levelNumber: 2
+  timeDelayNextLevel: 3.5
 --- !u!4 &1299665915
 Transform:
   m_ObjectHideFlags: 0
@@ -32122,6 +32123,26 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!95 &1014182711715663153
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9009690499285105105}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 91fabdccf5549f144a6288ec04ad959e, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &1196138653105751155
 GameObject:
   m_ObjectHideFlags: 0
@@ -40373,6 +40394,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9009690499285105106}
   - component: {fileID: 9009690499285105107}
+  - component: {fileID: 1014182711715663153}
   m_Layer: 0
   m_Name: AudioManager
   m_TagString: Untagged
@@ -40560,7 +40582,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 7179b5157cfbbbb439f3dce3f580451a, type: 3}
-  m_PlayOnAwake: 0
+  m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
   Loop: 0

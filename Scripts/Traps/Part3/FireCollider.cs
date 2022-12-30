@@ -6,7 +6,7 @@ namespace DefaultNamespace.Traps.Enemy_Part3
     {
         public override void Received()
         {
-            GameManager.Instance.robonRespawn.RobonDeath();
+            RobonCtrl.Instance.robonRespawn.RobonDeath();
         }
     }
 }

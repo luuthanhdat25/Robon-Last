@@ -11,6 +11,8 @@ namespace DefaultNamespace.UI
         [SerializeField] protected Image fill;
         public bool hadWarning;
         public float currentTime;
+        private bool isStopTimeBar = false;
+        
         protected override void LoadComponents()
         {
             base.LoadComponents();
@@ -29,6 +31,7 @@ namespace DefaultNamespace.UI
             if (this.fill != null) return;
             this.fill = transform.Find("Fill").GetComponent<Image>();
         }
+        
         protected void Start()
         {
             SetMaxTime(GameManager.Instance.TimeMax);
@@ -41,7 +44,7 @@ namespace DefaultNamespace.UI
 
         protected virtual void OverTime()
         {
-            if (RobonCtrl.Instance.robonHealth.IsLose()) return;
+            if (RobonCtrl.Instance.robonHealth.IsLose() || isStopTimeBar == true) return;
             currentTime -= Time.deltaTime;
             SetTime();
 
@@ -52,7 +55,12 @@ namespace DefaultNamespace.UI
                 sound.Play();
             }
 
-            if (currentTime <= 0) GameManager.Instance.robonRespawn.RobonDeath();
+            if (currentTime <= 0) RobonCtrl.Instance.robonRespawn.RobonDeath();
+        }
+
+        public void StopTimeBar()
+        {
+            isStopTimeBar = true;
         }
 
         public virtual void SetTime()
